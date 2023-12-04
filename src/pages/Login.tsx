@@ -34,6 +34,22 @@ const Login: React.FC = () => {
               }
             />
           </div>
+          <div className="mt-6">
+            <label htmlFor="email" className="text-md font-semibold mt-6">
+              Password
+            </label>
+            <Input
+              id="email"
+              type="email"
+              className="w-full mt-2"
+              autoFocus
+              placeholder="Enter your password"
+              value={payload.username}
+              onChange={(e) =>
+                setPayload({ ...payload, username: e.target.value })
+              }
+            />
+          </div>
         </div>
       </div>
     </div>
