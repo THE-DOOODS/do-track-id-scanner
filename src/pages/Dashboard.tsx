@@ -5,6 +5,7 @@ import logo from '@/assets/logo.png';
 import { HiMiniUser } from 'react-icons/hi2';
 import { useData } from '@/hooks/useData';
 import NavBar from '@/components/NavBar';
+import { Pagination } from '@mui/material';
 
 const Dashboard: React.FC = () => {
   const { getData } = useData();
@@ -22,6 +23,14 @@ const Dashboard: React.FC = () => {
               size={25}
             />
           </div>
+          <div className="mt-4">
+            <h1 className="font-bold text-2xl">Hello</h1>
+            <p className="text-sm text-zinc-600 leading-tight">
+              Below are the list of students designated to you. Please keep on
+              monitoring them.
+            </p>
+          </div>
+          <Pagination />
         </div>
       </div>
       <NavBar />
