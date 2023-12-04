@@ -6,6 +6,18 @@ export default {
       fontFamily: {
         main: ['Poppins', 'sans-serif']
       },
+      backgroundColor: {
+        primary: '#AD31C1',
+        secondary: '#E6A458'
+      },
+      colors: {
+        primary: '#AD31C1',
+        secondary: '#E6A458'
+      },
+      textColor: {
+        primary: '#AD31C1',
+        secondary: '#E6A458'
+      },
       screens: {
         xxxs: '240px',
         xxs: '280px',

@@ -7,8 +7,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "*" : ["types/*.d.ts"]
+      "@/*": ["src/*", "src/types/global.d.ts"],
     },
 
     /* Bundler mode */
