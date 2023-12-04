@@ -2,7 +2,13 @@
 import { useState, useEffect } from 'react';
 import { StudentAttendance } from '@/types/global';
 
-export const useFetch = ({ ...args }) => {
+type Args = {
+  url: string;
+  token: string;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export const useFetch = ({ ...args }: Args) => {
   const [data, setData] = useState<StudentAttendance[]>([]);
 
   const headers = new Headers({
