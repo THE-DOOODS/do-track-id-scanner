@@ -1,3 +1,12 @@
+export type Admin = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  position: string;
+  college_id: string;
+};
+
 export type StudentAttendance = {
   studentId: string;
   firstName: string;
