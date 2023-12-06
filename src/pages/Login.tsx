@@ -12,6 +12,11 @@ const Login: React.FC = () => {
   });
 
   const login = async () => {
+    if (!payload.email || !payload.password) {
+      toast.error('Please fill up all fields');
+      return;
+    }
+
     if (!payload.email.includes('@carsu.edu.ph')) {
       toast.error('Invalid email address. Please use your university email');
       return;
