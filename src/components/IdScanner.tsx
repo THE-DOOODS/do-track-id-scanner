@@ -28,7 +28,7 @@ const IdScanner: React.FC = () => {
              */
             calculateScanRegion: (v: HTMLVideoElement) => {
               const heightRegionSize = Math.round(
-                0.7 * Math.min(v.videoWidth, v.videoHeight)
+                0.5 * Math.min(v.videoWidth, v.videoHeight)
               );
               const widthRegionSize = Math.round(0.4 * v.videoWidth);
 
