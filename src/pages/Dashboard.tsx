@@ -1,15 +1,18 @@
 //eslint-disable-next-line
 //@ts-nocheck
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import logo from '@/assets/logo.png';
 import { HiMiniUser } from 'react-icons/hi2';
 import { useData } from '@/hooks/useData';
 import NavBar from '@/components/NavBar';
 import { Pagination } from '@mui/material';
+import { useFetch } from '@/hooks/useFetch';
+import { Popover, PopoverTrigger, PopoverContent } from '@chakra-ui/react';
 
 const Dashboard: React.FC = () => {
   const { getData } = useData();
   const [admin, setAdmin] = useState({});
+  const { data } = useFetch('/admin');
 
   return (
     <div className="font-main">
@@ -18,10 +21,17 @@ const Dashboard: React.FC = () => {
         <div className="flex flex-col min-h-full">
           <div className="flex justify-between items-center mt-4">
             <img src={logo} alt="logo" className="w-28" />
-            <HiMiniUser
-              className="bg-primary p-1 rounded-full text-white"
-              size={25}
-            />
+            <Popover open={open}>
+              <PopoverTrigger>
+                <HiMiniUser
+                  className="bg-primary p-1 rounded-full text-white"
+                  size={25}
+                />
+              </PopoverTrigger>
+              <PopoverContent>
+                <button className="">Logout</button>
+              </PopoverContent>
+            </Popover>
           </div>
           <div className="mt-4">
             <h1 className="font-bold text-2xl">Hello</h1>
