@@ -23,9 +23,9 @@ function App() {
           path="/scan"
           element={
             <Fragment>
-              <AuthContextProvider>
-                <IdScanner />
-              </AuthContextProvider>
+              {/* <AuthContextProvider> */}
+              <IdScanner />
+              {/* </AuthContextProvider> */}
             </Fragment>
           }
         />

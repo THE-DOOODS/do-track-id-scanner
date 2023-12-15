@@ -11,6 +11,7 @@ const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
   if (!token) {
     return <Navigate to="/" />; //avoid rehydration mismatch
   }
+
   return <div>{children}</div>;
 };
 

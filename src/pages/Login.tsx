@@ -4,8 +4,12 @@ import React, { useState } from 'react';
 import logo from '@/assets/logo.png';
 import toast, { Toaster } from 'react-hot-toast';
 import { Input, Button } from '@mui/material';
+import url from '@/utils/url';
+import axios from 'axios';
+import { useAuth } from '@/hooks/useAuth';
 
 const Login: React.FC = () => {
+  const { setToken } = useAuth();
   const [payload, setPayload] = useState({
     email: '',
     password: ''
@@ -17,12 +21,32 @@ const Login: React.FC = () => {
       return;
     }
 
-    if (!payload.email.includes('@carsu.edu.ph')) {
-      toast.error('Invalid email address. Please use your university email');
-      return;
-    }
+    const { email, password } = payload;
 
-    //logic for login
+    try {
+      const res = await axios.post(
+        url('/login'),
+        {
+          email,
+          password
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (res.data || res.status === 200) {
+        setToken(res.data.data.token);
+        toast.success('Login successful!');
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1000);
+      }
+    } catch (error) {
+      toast.error('Invalid credentials. Please try again.');
+    }
   };
 
   return (

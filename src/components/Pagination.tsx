@@ -24,10 +24,9 @@ const Pagination: React.FC = () => {
               'Time Out'
             ].map((head, idx) => {
               return (
-                <>
-                  <TableCell key={idx}>{head}</TableCell>
-                  <h1>Hi</h1>
-                </>
+                <TableCell key={idx}>
+                  <h1>{head}</h1>
+                </TableCell>
               );
             })}
           </TableRow>
