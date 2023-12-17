@@ -8,12 +8,10 @@ import NavBar from '@/components/NavBar';
 import { Pagination } from '@mui/material';
 import { useFetch } from '@/hooks/useFetch';
 import { Popover, PopoverTrigger, PopoverContent } from '@chakra-ui/react';
+import { getCreds } from '@/utils/getCreds';
 
 const Dashboard: React.FC = () => {
-  const { getData } = useData();
-  const [admin, setAdmin] = useState({});
-  const { data } = useFetch('/admin');
-
+  const { admin_id, first_name } = getCreds();
   return (
     <div className="font-main">
       <div className="bg-primary w-full h-3" />
@@ -34,7 +32,7 @@ const Dashboard: React.FC = () => {
             </Popover>
           </div>
           <div className="mt-4">
-            <h1 className="font-bold text-2xl">Hello</h1>
+            <h1 className="font-bold text-2xl">Hello, {first_name}</h1>
             <p className="text-sm text-zinc-600 leading-tight">
               Below are the list of students designated to you. Please keep on
               monitoring them.
