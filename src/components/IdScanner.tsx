@@ -10,11 +10,13 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaArrowLeft } from 'react-icons/fa';
+import { getCreds } from '@/utils/getCreds';
 
 const IdScanner: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const scannerRef = useRef<HTMLVideoElement>(null);
   const [studentId, setStudentId] = useState<string | null>(null);
+  const { admin_id } = getCreds();
 
   useEffect(() => {
     let scanner: QrScanner;
@@ -83,7 +85,7 @@ const IdScanner: React.FC = () => {
         url('/attendance/record-time'),
         {
           student_id: studentId,
-          admin_id: '211-00111'
+          admin_id
         },
         {
           headers: {
@@ -94,7 +96,7 @@ const IdScanner: React.FC = () => {
       );
 
       if (res.data || res.status === 200) {
-        toast.success('Successfully recorded time!');
+        toast.success(res?.data?.message);
         setLoading(false);
         setTimeout(() => {
           window.location.href = '/dashboard';

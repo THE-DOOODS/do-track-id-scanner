@@ -39,14 +39,21 @@ const Login: React.FC = () => {
 
       if (res.data || res.status === 200) {
         setToken(res.data.data.token);
-        console.log(result.data)
-        // localStorage.setItem("admin_id", )
+
+        const data = {
+          admin_id: res?.data?.data?.admin?.admin_id,
+          first_name: res?.data?.data?.admin?.first_name
+        };
+
+        localStorage.setItem('data', JSON.stringify(data));
+
         toast.success('Login successful!');
         setTimeout(() => {
           window.location.href = '/dashboard';
         }, 1000);
       }
     } catch (error) {
+      console.log(error);
       toast.error('Invalid credentials. Please try again.');
     }
   };
