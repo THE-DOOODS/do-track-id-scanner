@@ -39,6 +39,8 @@ const Login: React.FC = () => {
 
       if (res.data || res.status === 200) {
         setToken(res.data.data.token);
+        console.log(result.data)
+        // localStorage.setItem("admin_id", )
         toast.success('Login successful!');
         setTimeout(() => {
           window.location.href = '/dashboard';

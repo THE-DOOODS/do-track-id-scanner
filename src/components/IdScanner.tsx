@@ -1,14 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-//eslint-disable-next-line
-//@ts-nocheck
+// eslint-disable-next-line
+// @ts-nocheck
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import beep from '@/assets/beep.mp3';
 import QrScanner from 'qr-scanner';
+import url from '@/utils/url';
+import { toast, Toaster } from 'react-hot-toast';
+import axios from 'axios';
+import { motion } from 'framer-motion';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const IdScanner: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const scannerRef = useRef<HTMLVideoElement>(null);
-  const [studentId, setStudentId] = useState('');
+  const [studentId, setStudentId] = useState<string | null>(null);
 
   useEffect(() => {
     let scanner: QrScanner;
@@ -16,16 +22,11 @@ const IdScanner: React.FC = () => {
     const startScanner = async () => {
       try {
         if (scannerRef.current) {
-          scanner = new QrScanner(scannerRef.current, result, {
+          scanner = new QrScanner(scannerRef.current, handleScannedIdResult, {
             preferredCamera: 'environment',
             returnDetailedScanResult: true,
             highlightScanRegion: true,
             maxScansPerSecond: 3,
-            /**
-             *
-             * @param v HTMLVideoElement
-             * TODO - Need to fix the scanner region base on the video size which is a full mobile screen
-             */
             calculateScanRegion: (v: HTMLVideoElement) => {
               const heightRegionSize = Math.round(
                 0.5 * Math.min(v.videoWidth, v.videoHeight)
@@ -58,34 +59,88 @@ const IdScanner: React.FC = () => {
     startScanner();
   }, []);
 
-  const result = useCallback((result: string) => {
-    if (/\d{3}-\d{5}/.test(result.data)) {
+  const handleScannedIdResult = (result: { data: string }) => {
+    if (typeof result.data === 'string') {
       setStudentId(result.data);
-      timeInOrOut();
     }
-    setStudentId(result);
-  }, []);
+  };
 
   const timeInOrOut = useCallback(async () => {
     const audio = new Audio(beep);
     audio.play();
-    //logic for time in or time out
     setLoading(true);
+
+    // Check regex first
+    const regex = /^[0-9]{3}-[0-9]{5}$/;
+    if (!regex.test(studentId || '')) {
+      setStudentId(null);
+      toast.error('Invalid Student ID');
+      return;
+    }
+
+    try {
+      const res = await axios.post(
+        url('/attendance/record-time'),
+        {
+          student_id: studentId,
+          admin_id: '211-00111'
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          }
+        }
+      );
+
+      if (res.data || res.status === 200) {
+        toast.success('Successfully recorded time!');
+        setLoading(false);
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1000);
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
   }, [studentId]);
+
+  useEffect(() => {
+    if (studentId) {
+      timeInOrOut();
+    }
+  }, [studentId, timeInOrOut]);
 
   return (
     <div className="h-screen">
-      <video
-        className="rounded-md border-2 border-slate-800 aspect-video"
-        style={{
-          height: '100%',
-          width: '100%',
-          cursor: 'pointer',
-          objectFit: 'contain'
-        }}
-        ref={scannerRef}
-      />
-      <p className="text-center font-bold">{studentId}</p>
+      <Toaster />
+      <div className="h-full w-full">
+        <FaArrowLeft className="p-4" />
+        <video
+          className="rounded-md aspect-video"
+          style={{
+            height: '100%',
+            width: '100%',
+            cursor: 'pointer',
+            objectFit: 'contain'
+          }}
+          ref={scannerRef}
+        />
+        {loading && (
+          <span className="flex gap-4 items-center text-black bg-black">
+            <motion.div
+              animate={{
+                rotate: 360
+              }}
+              transition={{ repeat: Infinity, duration: 0.4, ease: 'linear' }}
+            >
+              <AiOutlineLoading3Quarters size={15} className="text-black" />
+            </motion.div>
+          </span>
+        )}
+      </div>
     </div>
   );
 };
