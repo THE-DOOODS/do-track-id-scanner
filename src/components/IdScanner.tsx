@@ -72,6 +72,7 @@ const IdScanner: React.FC = () => {
     audio.play();
     setLoading(true);
 
+    console.log(admin_id);
     // Check regex first
     const regex = /^[0-9]{3}-[0-9]{5}$/;
     if (!regex.test(studentId || '')) {
@@ -85,7 +86,7 @@ const IdScanner: React.FC = () => {
         url('/attendance/record-time'),
         {
           student_id: studentId,
-          admin_id
+          admin_id: admin_id
         },
         {
           headers: {
