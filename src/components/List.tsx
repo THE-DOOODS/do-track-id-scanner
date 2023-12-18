@@ -97,19 +97,26 @@ const List: React.FC = () => {
                 <div className="flex gap-2 items-center ml-10">
                   <p className="bg-zinc-400 p-2 rounded-md text-xs ">
                     Time In:{' '}
-                    {new Date(student?.time_in).toLocaleTimeString('en-US', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      hour12: true
-                    })}
+                    {student?.time_in
+                      ? new Date(student?.time_in).toLocaleTimeString('en-US', {
+                          hour: '2-digit',
+                          minute: '2-digit',
+                          hour12: true
+                        })
+                      : 'No time-in yet.'}
                   </p>
                   <p className="bg-zinc-400 p-2 rounded-md text-xs ">
                     Time Out:{' '}
-                    {new Date(student?.time_out).toLocaleTimeString('en-US', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      hour12: true
-                    })}
+                    {student?.time_out
+                      ? new Date(student?.time_out).toLocaleTimeString(
+                          'en-US',
+                          {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true
+                          }
+                        )
+                      : 'No time-out yet'}
                   </p>
                 </div>
               </div>
