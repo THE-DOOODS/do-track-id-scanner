@@ -1,20 +1,18 @@
 //eslint-disable-next-line
 //@ts-nocheck
-import React, { useState } from 'react';
+import React from 'react';
 import logo from '@/assets/logo.png';
 import { HiMiniUser } from 'react-icons/hi2';
-import { useData } from '@/hooks/useData';
 import NavBar from '@/components/NavBar';
-import { Pagination } from '@mui/material';
-import { useFetch } from '@/hooks/useFetch';
 import { Popover, PopoverTrigger, PopoverContent } from '@chakra-ui/react';
 import { getCreds } from '@/utils/getCreds';
+import StudentList from '@/components/StudentList';
+import illustration from '@/assets/illustration.png';
 
 const Dashboard: React.FC = () => {
   const { admin_id, first_name } = getCreds();
   return (
-    <div className="font-main">
-      <div className="bg-primary w-full h-3" />
+    <div className="font-main bg-zinc-100">
       <div className="xxxs:px-4 xxs:px-6 xs:px-8 sm:px-10 md:hidden">
         <div className="flex flex-col min-h-full">
           <div className="flex justify-between items-center mt-4">
@@ -22,24 +20,35 @@ const Dashboard: React.FC = () => {
             <Popover open={open}>
               <PopoverTrigger>
                 <HiMiniUser
-                  className="bg-primary p-1 rounded-full text-white"
+                  className="relative bg-primary p-1 rounded-full text-white"
                   size={25}
                 />
               </PopoverTrigger>
               <PopoverContent>
-                <button className="">Logout</button>
+                <button className="absolute bg-zinc-400 p-2 rounded-md text-zinc-800">
+                  Logout
+                </button>
               </PopoverContent>
             </Popover>
           </div>
-          <div className="mt-4">
-            <h1 className="font-bold text-2xl">Hello, {first_name}</h1>
-            <p className="text-sm text-zinc-600 leading-tight">
-              Below are the list of students designated to you. Please keep on
-              monitoring them.
-            </p>
+          <div className="mt-4 bg-primary p-4 rounded-2xl text-white grid grid-cols-6 gap-4 justify-items-center">
+            <div className="col-span-4">
+              <h1 className="font-bold text-2xl leading-6">
+                Hello, <span className="text-secondary">{first_name}</span>
+              </h1>
+              <p className="text-sm text-zinc-200 leading-tight mt-2">
+                Below are the list of students designated to you.
+              </p>
+            </div>
+            <div className="col-span-2">
+              <img src={illustration} className="w-full h-28" />
+            </div>
           </div>
-          <Pagination />
+          <StudentList />
         </div>
+      </div>
+      <div className="rounded-t-2xl bg-zinc-300 h-screen mt-4">
+        <div className="xxxs:px-4 xxs:px-6 xs:px-8 sm:px-10 md:hidden"></div>
       </div>
       <NavBar />
     </div>

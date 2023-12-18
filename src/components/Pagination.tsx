@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { getCreds } from '@/utils/getCreds';
+import url from '@/utils/url';
+import axios from 'axios';
 import {
   TableContainer,
   Table,
@@ -9,6 +12,26 @@ import {
 } from '@mui/material';
 
 const Pagination: React.FC = () => {
+  // const { admin_id } = getCreds();
+
+  const getData = async () => {
+    try {
+      const res = await axios.get(url('/attendance/attendance-by-college/1'), {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        }
+      });
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <TableContainer>
       <Table>
