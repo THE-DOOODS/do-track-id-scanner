@@ -100,9 +100,6 @@ const IdScanner: React.FC = () => {
       if (res.data || res.status === 200) {
         toast.success(res?.data?.message);
         setLoading(false);
-        setTimeout(() => {
-          window.location.href = '/dashboard';
-        }, 1000);
       }
     } catch (err) {
       toast.error(err?.response?.data?.message);
@@ -122,13 +119,14 @@ const IdScanner: React.FC = () => {
       <Toaster />
       <div className="flex gap-2 items-center my-4">
         <button
+          className="absolute z-10"
           onClick={() => {
             window.location.href = '/dashboard';
           }}
         >
           <FaArrowLeft size={20} className="mx-4" />
         </button>
-        <img src={logo} alt="Logo" className="h-4" />
+        <img src={logo} alt="Logo" className="h-4 ml-14" />
       </div>
       <div>
         <video
