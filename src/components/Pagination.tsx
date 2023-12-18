@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getCreds } from '@/utils/getCreds';
+// import { getCreds } from '@/utils/getCreds';
 import url from '@/utils/url';
 import axios from 'axios';
 import {
