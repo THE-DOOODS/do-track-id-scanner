@@ -1,6 +1,6 @@
 //eslint-disable-next-line
 //@ts-nocheck
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '@/assets/logo.png';
 import { HiMiniUser } from 'react-icons/hi2';
 import NavBar from '@/components/NavBar';
@@ -9,24 +9,67 @@ import { getCreds } from '@/utils/getCreds';
 import StudentList from '@/components/StudentList';
 import illustration from '@/assets/illustration.png';
 import List from '@/components/List';
+import { toast, Toaster } from 'sonner';
+import url from '@/utils/url';
+import { useAuth } from '@/hooks/useAuth';
+import axios from 'axios';
 
 const Dashboard: React.FC = () => {
+  const { getToken, removeToken } = useAuth();
   const { first_name } = getCreds();
+
+  const logout = async () => {
+    const promise = () => new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const res = await axios.post(
+        url('/logout'),
+        {},
+        {
+          headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${getToken()}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (res.data || res.status === 200) {
+        toast.promise(promise, {
+          loading: 'Logging out',
+          success: () => {
+            return `Logged out successfully!`;
+          },
+          error: 'Error'
+        });
+      }
+
+      setTimeout(() => {
+        removeToken();
+        localStorage.clear();
+      }, 2500);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="font-main bg-zinc-100">
+      <Toaster position="bottom-center" />
       <div className="xxxs:px-4 xxs:px-6 xs:px-8 sm:px-10 md:hidden">
         <div className="flex flex-col min-h-full">
           <div className="flex justify-between items-center mt-4">
             <img src={logo} alt="logo" className="w-28" />
-            <Popover open={open}>
+            <Popover placement="bottom">
               <PopoverTrigger>
                 <HiMiniUser
-                  className="relative bg-primary p-1 rounded-full text-white"
+                  className="bg-primary p-1 rounded-full text-white"
                   size={25}
                 />
               </PopoverTrigger>
               <PopoverContent>
-                <button className="absolute bg-zinc-400 p-2 rounded-md text-zinc-800">
+                <button
+                  onClick={logout}
+                  className="absolute left-[290px] top-[45px] bg-primary p-2 rounded-md text-white font-bold shadow-zinc-950 shadow-2xl focus:outline outline-none"
+                >
                   Logout
                 </button>
               </PopoverContent>
