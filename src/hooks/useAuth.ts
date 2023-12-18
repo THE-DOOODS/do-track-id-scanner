@@ -11,5 +11,8 @@ export const useAuth = () => {
     setCookie('token', token, { path: '/' });
   };
 
-  return { getToken, setToken };
+  const removeToken = () => {
+    setCookie('token', '', { path: '/' });
+  };
+  return { getToken, setToken, removeToken };
 };

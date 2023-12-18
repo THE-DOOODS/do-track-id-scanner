@@ -45,7 +45,12 @@ const List: React.FC = () => {
       {students?.length !== 0 ? (
         students?.map((student, idx) =>
           loading ? (
-            <Skeleton variant="rectangular" width={'100%'} height={40} />
+            <Skeleton
+              key={idx}
+              variant="rectangular"
+              width={'100%'}
+              height={40}
+            />
           ) : (
             <div
               key={idx}
