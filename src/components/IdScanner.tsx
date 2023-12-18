@@ -104,7 +104,9 @@ const IdScanner: React.FC = () => {
     } catch (err) {
       toast.error(err?.response?.data?.message);
     } finally {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     }
   }, [studentId]);
 
