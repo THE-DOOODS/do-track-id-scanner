@@ -2,7 +2,7 @@
 //@ts-nocheck
 import React, { useState } from 'react';
 import logo from '@/assets/logo.png';
-import toast, { Toaster } from 'react-hot-toast';
+import { toast, Toaster } from 'sonner';
 import { Input, Button } from '@mui/material';
 import url from '@/utils/url';
 import axios from 'axios';
@@ -16,8 +16,9 @@ const Login: React.FC = () => {
   });
 
   const login = async () => {
+    const promise = () => new Promise((resolve) => setTimeout(resolve, 800));
     if (!payload.email || !payload.password) {
-      toast.error('Please fill up all fields');
+      toast.warning('Please fill up all fields');
       return;
     }
 
@@ -36,31 +37,39 @@ const Login: React.FC = () => {
           }
         }
       );
+      toast.promise(promise, {
+        loading: 'Logging in',
+        success: () => {
+          return `Logged in successfully!`;
+        },
+        error: 'Error'
+      });
 
       if (res.data || res.status === 200) {
         setToken(res.data.data.token);
-
         const data = {
           admin_id: res?.data?.data?.admin?.admin_id,
           first_name: res?.data?.data?.admin?.first_name
         };
-
         localStorage.setItem('data', JSON.stringify(data));
 
-        toast.success('Login successful!');
         setTimeout(() => {
           window.location.href = '/dashboard';
         }, 1000);
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      toast.promise(promise, {
+        loading: 'Logging in'
+      });
+      setTimeout(() => {
+        toast.error(error?.response?.data?.message);
+      }, 1000);
     }
   };
 
   return (
     <div className="font-main">
-      <Toaster />
+      <Toaster richColors />
       <div className="bg-primary w-full h-3" />
       <div className="h-screen flex flex-col justify-center">
         <div className="flex flex-col xxxs:px-4 xxs:px-6 xs:px-8 sm:px-10 md:hidden justify-center items-center">
