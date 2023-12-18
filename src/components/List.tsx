@@ -103,7 +103,7 @@ const List: React.FC = () => {
                           minute: '2-digit',
                           hour12: true
                         })
-                      : 'No time-in yet.'}
+                      : 'No in yet.'}
                   </p>
                   <p className="bg-zinc-400 p-2 rounded-md text-xs ">
                     Time Out:{' '}
@@ -116,7 +116,7 @@ const List: React.FC = () => {
                             hour12: true
                           }
                         )
-                      : 'No time-out yet'}
+                      : 'No out yet'}
                   </p>
                 </div>
               </div>
