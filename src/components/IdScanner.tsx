@@ -132,12 +132,13 @@ const IdScanner: React.FC = () => {
       </div>
       <div>
         <video
-          className="rounded-md aspect-video mt-36"
+          className="rounded-md aspect-video"
           style={{
-            height: '100%',
+            position: 'fixed',
+            top: 0,
+            left: 0,
             width: '100%',
-            cursor: 'pointer',
-            objectFit: 'contain'
+            height: '100%'
           }}
           ref={scannerRef}
         />
