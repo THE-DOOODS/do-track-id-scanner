@@ -140,7 +140,7 @@ const IdScanner: React.FC = () => {
           }}
           ref={scannerRef}
         />
-        <div className="mt-4 grid place-items-center justify-center">
+        <div className="relative top-[500px] grid place-items-center justify-center">
           {loading && (
             <span className="flex gap-4 items-center bg-primary p-4 rounded-md">
               <motion.div
