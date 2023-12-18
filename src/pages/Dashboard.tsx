@@ -8,9 +8,10 @@ import { Popover, PopoverTrigger, PopoverContent } from '@chakra-ui/react';
 import { getCreds } from '@/utils/getCreds';
 import StudentList from '@/components/StudentList';
 import illustration from '@/assets/illustration.png';
+import List from '@/components/List';
 
 const Dashboard: React.FC = () => {
-  const { admin_id, first_name } = getCreds();
+  const { first_name } = getCreds();
   return (
     <div className="font-main bg-zinc-100">
       <div className="xxxs:px-4 xxs:px-6 xs:px-8 sm:px-10 md:hidden">
@@ -47,8 +48,10 @@ const Dashboard: React.FC = () => {
           <StudentList />
         </div>
       </div>
-      <div className="rounded-t-2xl bg-zinc-300 h-screen mt-4">
-        <div className="xxxs:px-4 xxs:px-6 xs:px-8 sm:px-10 md:hidden"></div>
+      <div className="rounded-t-[40px] bg-zinc-300 h-full mt-4 pt-6 pb-24">
+        <div className="xxxs:px-4 xxs:px-6 xs:px-8 sm:px-10 md:hidden">
+          <List />
+        </div>
       </div>
       <NavBar />
     </div>
