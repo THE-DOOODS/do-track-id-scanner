@@ -54,7 +54,7 @@ const Login: React.FC = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error('Invalid credentials. Please try again.');
+      toast.error(error.response.data.message);
     }
   };
 

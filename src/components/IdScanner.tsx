@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaArrowLeft } from 'react-icons/fa';
 import { getCreds } from '@/utils/getCreds';
+import logo from '@/assets/logo.png';
 
 const IdScanner: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -119,10 +120,19 @@ const IdScanner: React.FC = () => {
   return (
     <div className="h-screen">
       <Toaster />
-      <div className="h-full w-full">
-        <FaArrowLeft className="p-4" />
+      <div className="flex gap-2 items-center my-4">
+        <button
+          onClick={() => {
+            window.location.href = '/dashboard';
+          }}
+        >
+          <FaArrowLeft size={20} className="mx-4" />
+        </button>
+        <img src={logo} alt="Logo" className="h-4" />
+      </div>
+      <div>
         <video
-          className="rounded-md aspect-video"
+          className="rounded-md aspect-video mt-36"
           style={{
             height: '100%',
             width: '100%',
@@ -131,18 +141,21 @@ const IdScanner: React.FC = () => {
           }}
           ref={scannerRef}
         />
-        {loading && (
-          <span className="flex gap-4 items-center text-black bg-black">
-            <motion.div
-              animate={{
-                rotate: 360
-              }}
-              transition={{ repeat: Infinity, duration: 0.4, ease: 'linear' }}
-            >
-              <AiOutlineLoading3Quarters size={15} className="text-black" />
-            </motion.div>
-          </span>
-        )}
+        <div className="mt-4 grid place-items-center justify-center">
+          {loading && (
+            <span className="flex gap-4 items-center bg-primary p-4 rounded-md">
+              <motion.div
+                animate={{
+                  rotate: 360
+                }}
+                transition={{ repeat: Infinity, duration: 0.4, ease: 'linear' }}
+              >
+                <AiOutlineLoading3Quarters size={15} className="text-white" />
+              </motion.div>
+              <p className="text-white">{studentId}</p>
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );
