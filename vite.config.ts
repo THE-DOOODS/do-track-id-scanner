@@ -34,6 +34,7 @@ export default defineConfig({
         theme_color: '#AD31C1',
         background_color: '#FFF',
         start_url: '/',
+        scope: '/',
         icons: [
           {
             purpose: 'maskable',
