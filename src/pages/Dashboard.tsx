@@ -53,7 +53,7 @@ const Dashboard: React.FC = () => {
   };
   return (
     <div className="font-main bg-zinc-100">
-      <Toaster position="bottom-center" />
+      <Toaster richColors />
       <div className="xxxs:px-4 xxs:px-6 xs:px-8 sm:px-10 md:hidden">
         <div className="flex flex-col min-h-full">
           <div className="flex justify-between items-center mt-4">
