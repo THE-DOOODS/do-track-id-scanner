@@ -1,45 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 //eslint-disable-next-line
 //@ts-nocheck
-import React, { useEffect, useState } from 'react';
-import url from '@/utils/url';
-import axios from 'axios';
-import { getCreds } from '@/utils/getCreds';
+import React from 'react';
+
 import Skeleton from '@mui/material/Skeleton';
 import { FaCircleUser } from 'react-icons/fa6';
 import { LiaEmpire } from 'react-icons/lia';
 
-const List: React.FC = () => {
-  const [students, setStudents] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const { admin_id } = getCreds();
-
-  const getData = async () => {
-    try {
-      setLoading(true);
-      const res = await axios.get(
-        url(`/attendance/get-scanned-by-admin/${admin_id}`),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          }
-        }
-      );
-      const { data } = res.data;
-      console.log(data);
-      setStudents(data);
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
+const List: React.FC<{
+  students: any;
+  loading: boolean;
+  setStudent: any;
+}> = ({ students, loading }) => {
   return (
     <div className="flex flex-col gap-4 h-full">
       {students?.length !== 0 ? (
