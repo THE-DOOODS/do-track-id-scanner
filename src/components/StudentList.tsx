@@ -4,10 +4,10 @@ import React, { useState, useEffect } from 'react';
 import { CiSearch } from 'react-icons/ci';
 
 const StudentList: React.FC<{ setStudents: any; originalStudents: any }> = ({
-  setStudents,
   originalStudents
 }) => {
   const [name, setName] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setFilteredStudents] = useState(originalStudents);
 
   const handleSearch = () => {
