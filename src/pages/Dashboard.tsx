@@ -1,6 +1,6 @@
 //eslint-disable-next-line
 //@ts-nocheck
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '@/assets/logo.png';
 import { HiMiniUser } from 'react-icons/hi2';
 import NavBar from '@/components/NavBar';
@@ -17,21 +17,20 @@ import axios from 'axios';
 const Dashboard: React.FC = () => {
   const { getToken, removeToken } = useAuth();
   const { first_name } = getCreds();
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { admin_id } = getCreds();
 
   const logout = async () => {
     const promise = () => new Promise((resolve) => setTimeout(resolve, 1500));
     try {
-      const res = await axios.post(
-        url('/logout'),
-        {},
-        {
-          headers: {
-            Accept: 'application/json',
-            Authorization: `Bearer ${getToken()}`,
-            'Content-Type': 'application/json'
-          }
+      const res = await axios.delete(url('/logout'), {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+          'Content-Type': 'application/json'
         }
-      );
+      });
 
       if (res.data || res.status === 200) {
         toast.promise(promise, {
@@ -51,6 +50,34 @@ const Dashboard: React.FC = () => {
       console.log(err);
     }
   };
+
+  const getData = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(
+        url(`/attendance/get-scanned-by-admin/${admin_id}`),
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          }
+        }
+      );
+      const { data } = res.data;
+
+      setStudents(data);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <div className="font-main bg-zinc-100">
       <Toaster richColors />
@@ -88,12 +115,16 @@ const Dashboard: React.FC = () => {
               <img src={illustration} className="w-full h-28" />
             </div>
           </div>
-          <StudentList />
+          <StudentList originalStudents={students} setStudents={setStudents} />
         </div>
       </div>
       <div className="rounded-t-[40px] bg-zinc-300 h-full mt-4 pt-6 pb-24">
         <div className="xxxs:px-4 xxs:px-6 xs:px-8 sm:px-10 md:hidden">
-          <List />
+          <List
+            students={students}
+            setStudents={setStudents}
+            loading={loading}
+          />
         </div>
       </div>
       <NavBar />
