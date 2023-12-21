@@ -43,6 +43,7 @@ const Signature = () => {
                 })
               }).then(async (res) => {
                 if (res.ok) {
+                  sessionStorage.removeItem('student_id');
                   setTimeout(() => {
                     window.location.href = '/dashboard';
                   }, 1000);
