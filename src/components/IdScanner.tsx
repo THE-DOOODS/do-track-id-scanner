@@ -103,10 +103,17 @@ const IdScanner: React.FC = () => {
         toast.success(res?.data?.message);
         setLoading(false);
 
-        sessionStorage.setItem('student_id', studentId);
-        setTimeout(() => {
-          window.location.href = '/signature';
-        }, 1500);
+        //signature only after time-in
+        if (res?.data?.message == 'Time in recorded successfully') {
+          sessionStorage.setItem('student_id', studentId);
+          setTimeout(() => {
+            window.location.href = '/signature';
+          }, 1500);
+        } else {
+          setTimeout(() => {
+            window.location.href = '/dashboard';
+          }, 1500);
+        }
       }
     } catch (err) {
       toast.error(err?.response?.data?.message);
