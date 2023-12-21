@@ -108,11 +108,11 @@ const IdScanner: React.FC = () => {
           sessionStorage.setItem('student_id', studentId);
           setTimeout(() => {
             window.location.href = '/signature';
-          }, 1500);
+          }, 2500);
         } else {
           setTimeout(() => {
             window.location.href = '/dashboard';
-          }, 1500);
+          }, 2500);
         }
       }
     } catch (err) {
