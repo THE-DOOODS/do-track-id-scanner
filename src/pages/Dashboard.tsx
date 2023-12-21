@@ -115,7 +115,7 @@ const Dashboard: React.FC = () => {
               <img src={illustration} className="w-full h-28" />
             </div>
           </div>
-          <StudentList originalStudents={students} setStudents={setStudents} />
+          <StudentList students={students} />
         </div>
       </div>
       <div className="rounded-t-[40px] bg-zinc-300 h-full mt-4 pt-6 pb-24">
