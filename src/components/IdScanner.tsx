@@ -11,9 +11,11 @@ import { motion } from 'framer-motion';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaArrowLeft } from 'react-icons/fa';
 import { getCreds } from '@/utils/getCreds';
+import { useAuth } from '@/hooks/useAuth';
 import logo from '@/assets/logo.png';
 
 const IdScanner: React.FC = () => {
+  const { getToken } = useAuth();
   const [loading, setLoading] = useState(false);
   const scannerRef = useRef<HTMLVideoElement>(null);
   const [studentId, setStudentId] = useState<string | null>(null);
@@ -73,7 +75,6 @@ const IdScanner: React.FC = () => {
     audio.play();
     setLoading(true);
 
-    console.log(admin_id);
     // Check regex first
     const regex = /^[0-9]{3}-[0-9]{5}$/;
     if (!regex.test(studentId || '')) {
@@ -92,7 +93,8 @@ const IdScanner: React.FC = () => {
         {
           headers: {
             'Content-Type': 'application/json',
-            Accept: 'application/json'
+            Accept: 'application/json',
+            Authorization: `Bearer ${getToken()}`
           }
         }
       );
@@ -100,6 +102,18 @@ const IdScanner: React.FC = () => {
       if (res.data || res.status === 200) {
         toast.success(res?.data?.message);
         setLoading(false);
+
+        //signature only after time-in
+        if (res?.data?.message == 'Time in recorded successfully') {
+          sessionStorage.setItem('student_id', studentId);
+          setTimeout(() => {
+            window.location.href = '/signature';
+          }, 1500);
+        } else {
+          setTimeout(() => {
+            window.location.href = '/dashboard';
+          }, 1500);
+        }
       }
     } catch (err) {
       toast.error(err?.response?.data?.message);

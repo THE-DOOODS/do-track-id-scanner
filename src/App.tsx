@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login, Dashboard } from '@/pages';
 import AuthContextProvider from '@/context/AuthContextProvider';
 import IdScanner from '@/components/IdScanner';
+import Signature from './components/Signature';
 
 function App() {
   return (
@@ -25,6 +26,16 @@ function App() {
             <Fragment>
               <AuthContextProvider>
                 <IdScanner />
+              </AuthContextProvider>
+            </Fragment>
+          }
+        />
+        <Route
+          path="/signature"
+          element={
+            <Fragment>
+              <AuthContextProvider>
+                <Signature />
               </AuthContextProvider>
             </Fragment>
           }
