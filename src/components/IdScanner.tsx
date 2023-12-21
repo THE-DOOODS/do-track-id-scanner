@@ -11,9 +11,11 @@ import { motion } from 'framer-motion';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { FaArrowLeft } from 'react-icons/fa';
 import { getCreds } from '@/utils/getCreds';
+import { useAuth } from '@/hooks/useAuth';
 import logo from '@/assets/logo.png';
 
 const IdScanner: React.FC = () => {
+  const { getToken } = useAuth();
   const [loading, setLoading] = useState(false);
   const scannerRef = useRef<HTMLVideoElement>(null);
   const [studentId, setStudentId] = useState<string | null>(null);
@@ -92,7 +94,8 @@ const IdScanner: React.FC = () => {
         {
           headers: {
             'Content-Type': 'application/json',
-            Accept: 'application/json'
+            Accept: 'application/json',
+            Authorization: `Bearer ${getToken()}`
           }
         }
       );
