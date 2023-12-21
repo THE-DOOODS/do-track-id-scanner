@@ -75,7 +75,6 @@ const IdScanner: React.FC = () => {
     audio.play();
     setLoading(true);
 
-    console.log(admin_id);
     // Check regex first
     const regex = /^[0-9]{3}-[0-9]{5}$/;
     if (!regex.test(studentId || '')) {
@@ -103,6 +102,11 @@ const IdScanner: React.FC = () => {
       if (res.data || res.status === 200) {
         toast.success(res?.data?.message);
         setLoading(false);
+
+        sessionStorage.setItem('student_id', studentId);
+        setTimeout(() => {
+          window.location.href = '/signature';
+        }, 1500);
       }
     } catch (err) {
       toast.error(err?.response?.data?.message);
